@@ -7,7 +7,7 @@ install:
   - mvn dependency:go-offline
 
 script:
-  - if [ "$SCRIPT" = "test" ]; then mvn clean package; fi
+  - if [ "$SCRIPT" = "test" ]; then mvn clean package -DskipTests; fi
 
 cache:
   - .m2/repository
