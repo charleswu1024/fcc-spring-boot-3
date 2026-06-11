@@ -1,7 +1,7 @@
 steps:
   # 阶段 1：使用 JDK 17/21 编译并打包 Java 项目
   build-jar:
-    image: maven:3.9-eclipse-temurin-17
+    image: maven:3.9-eclipse-temurin-21
     commands:
       - mvn clean package -DskipTests
     backend_options:
