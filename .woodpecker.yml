@@ -1,9 +1,9 @@
-pipeline:
+steps:
   # 阶段 1：使用 JDK 17/21 编译并打包 Java 项目
   build-jar:
-    image: maven:3.9-eclipse-temurin-17 # 如果是 Java 21，请改为 21-alpine
+    image: maven:3.9-eclipse-temurin-17
     commands:
-      - mvn clean package -DskipTests # 跳过测试快速打包，如需测试请去掉 -DskipTests
+      - mvn clean package -DskipTests
     backend_options:
       kubernetes:
         resources:
