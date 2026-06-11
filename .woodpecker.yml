@@ -4,9 +4,4 @@ steps:
     image: maven:3.9-eclipse-temurin-21
     commands:
       - mvn clean package -DskipTests
-    backend_options:
-      kubernetes:
-        resources:
-          requests:
-            memory: "1Gi"
-            cpu: "500m"
+
