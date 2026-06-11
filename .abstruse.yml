@@ -1,0 +1,28 @@
+image: ubuntu:jammy
+
+matrix:
+  - env: SCRIPT=test JAVA_VERSION=21.0.2-open
+
+before_install:
+  - apt-get update && apt-get install -y wget curl zip unzip openjdk-17-jre-headless
+  - curl -s "https://sdkman.io" | bash
+  - |
+    export SDKMAN_DIR="$HOME/.sdkman"
+    [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk install java $JAVA_VERSION
+    sdk default java $JAVA_VERSION
+
+install:
+  - |
+    [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+    if [ -f "./mvnw" ]; then chmod +x ./mvnw && ./mvnw dependency:go-offline; else mvn dependency:go-offline; fi
+
+script:
+  - |
+    [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+    if [ "$SCRIPT" = "test" ]; then
+      if [ -f "./mvnw" ]; then ./mvnw clean package -DskipTests=false; else mvn clean package -DskipTests=false; fi
+    fi
+
+cache:
+  - .m2/repository
